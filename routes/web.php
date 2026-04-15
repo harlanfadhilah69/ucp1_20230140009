@@ -26,7 +26,6 @@ Route::middleware('auth')->group(function () {
     // --- PERBAIKAN DI SINI ---
     // Semua user yang sudah login boleh melihat daftar dan detail produk
     Route::get('/product', [ProductController::class, 'index'])->name('product.index');
-    Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
 
     // 3. Khusus Aksi Manipulasi Data (Hanya Admin / Gate manage-product)
     Route::middleware('can:manage-product')->group(function () {
@@ -36,6 +35,9 @@ Route::middleware('auth')->group(function () {
         Route::put('/product/update/{id}', [ProductController::class, 'update'])->name('product.update');
         Route::delete('/product/delete/{id}', [ProductController::class, 'delete'])->name('product.delete');
     });
+
+    // Route show harus setelah middleware routes agar tidak conflict dengan create dan edit
+    Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
 
 });
 

@@ -37,8 +37,8 @@ class ProductPolicy
      */
     public function update(User $user, Product $product): bool
     {
-        // Hanya pemilik produk yang bisa update
-        return $user->id === $product->user_id;
+        // Hanya pemilik produk yang bisa update, ATAU kalau dia admin
+        return $user->id === $product->user_id || $user->role === 'admin';
     }
 
     public function delete(User $user, Product $product): bool
