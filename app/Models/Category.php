@@ -13,14 +13,15 @@ class Category extends Model
     /**
      * Nama tabel di database didefinisikan manual karena menggunakan 'category' (singular).
      */
-    protected $table = 'category';
+    protected $table = 'categories';
 
     /**
      * Kolom yang dapat diisi melalui mass assignment.
      */
-    protected $fillable = [
-        'name',
-    ];
+protected $fillable = [
+    'name',
+    'slug'
+];
 
     /**
      * Relasi One-to-Many ke Product untuk menghitung TOTAL PRODUCT.

@@ -21,31 +21,35 @@ class StoreProductRequest extends FormRequest
      */
     public function rules(): array
     {
+        $method = $this->method();
+        
         return [
-            'name' => 'required|string|max:255',
-            'quantity' => 'required|integer|min:0',
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'stock' => 'required|integer|min:0',
             'price' => 'required|numeric|min:0',
-            'user_id' => 'required|exists:users,id',
-            'category_id' => 'nullable|exists:category,id',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'category_id' => 'nullable|exists:categories,id',
         ];
     }
 
     public function messages(): array
     {
         return [
-            'name.required' => 'Nama produk wajib diisi.',
-            'name.max' => 'Nama produk tidak boleh lebih dari 255 karakter.',
+            'title.required' => 'Judul produk wajib diisi.',
+            'title.max' => 'Judul produk tidak boleh lebih dari 255 karakter.',
 
-            'quantity.required' => 'Jumlah (kuantitas) produk wajib diisi.',
-            'quantity.integer' => 'Jumlah produk harus berupa angka bulat (tidak boleh desimal).',
-            'quantity.min' => 'Jumlah produk tidak boleh negatif.',
+            'stock.required' => 'Stok produk wajib diisi.',
+            'stock.integer' => 'Stok produk harus berupa angka bulat (tidak boleh desimal).',
+            'stock.min' => 'Stok produk tidak boleh negatif.',
 
             'price.required' => 'Harga produk wajib diisi.',
             'price.numeric' => 'Harga produk harus berupa angka yang valid.',
             'price.min' => 'Harga produk tidak boleh negatif.',
 
-            'user_id.required' => 'Pemilik produk (Owner) wajib dipilih.',
-            'user_id.exists' => 'Pemilik produk yang dipilih tidak ditemukan.',
+            'image.image' => 'File yang diunggah harus berupa gambar.',
+            'image.mimes' => 'Format gambar harus jpeg, png, jpg, atau gif.',
+            'image.max' => 'Ukuran gambar tidak boleh lebih dari 2MB.',
 
             'category_id.exists' => 'Kategori yang dipilih tidak ditemukan.',
         ];
